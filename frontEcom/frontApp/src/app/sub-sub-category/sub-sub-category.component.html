@@ -1,0 +1,41 @@
+<div *ngIf="subSubCategory" class="subcategory-container">
+  <div class="subcategory-header" [ngStyle]="{'background-image': 'url(' + 'http://localhost:85/' + imageUrl + ')'}">
+    <div class="subcategory-content">
+      <!--<h2>{{ subSubCategory.name }}</h2>-->
+      <h2 class="centered-text"><strong>Decouvrez les meilleure </strong>{{ subSubCategory.description }} <strong>Chez nous</strong></h2>
+      
+     
+    </div>
+  </div>
+
+  <div class="filters">
+    <div class="filter-item">
+      <label for="priceRange">Filter by Price:</label>
+      <input type="range" id="priceRange" min="0" max="1000" [(ngModel)]="priceFilter" (input)="applyFilters()">
+      <span>{{ priceFilter }} <strong>DHS</strong></span>
+    </div>
+  </div>
+
+  <div *ngIf="filteredProducts.length > 0" [id]="'products-section-' + subSubCategory.id">
+    <!--<h3>Products:</h3>-->
+    <div class="product-cards">
+      <div *ngFor="let product of filteredProducts" class="product-card">
+        <div class="product-image-container">
+          <img *ngIf="product.selectedImage" [src]="'http://localhost:85/' + product.selectedImage" alt="{{ product.name }}" class="product-image">
+        </div>
+        <div class="product-details">
+          <h4>{{ product.name }}</h4>
+          <p>{{ product.description }}</p>
+          <p>Price: {{ product.price | currency }}</p>
+          <div class="product-colors">
+            <div *ngFor="let color of product.colors" class="color-ball" [ngStyle]="{'background-color': color}" (click)="selectColor(product, color)"></div>
+          </div>
+          <button class="details-button" (click)="goToProductDetail(product.id)">View Details</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  <div *ngIf="filteredProducts.length === 0">
+    <p>No products available for this sub-category.</p>
+  </div>
+</div>

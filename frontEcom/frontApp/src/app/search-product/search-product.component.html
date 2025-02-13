@@ -1,0 +1,19 @@
+<!-- search-product.component.html -->
+<div class="search-results-container">
+    <h2 class="title">Produits Disponible</h2>
+    <div *ngIf="searchResults.length; else noResults" class="products-grid">
+      <div *ngFor="let product of searchResults" class="product-card">
+        <img [src]="getProductImage(product)" alt="{{ product.name }}" class="product-image">
+        <div class="product-info">
+          <h3>{{ product.name }}</h3>
+          <p>{{ product.description }}</p>
+          <p class="price">Price: {{ product.price | currency }}</p>
+          <button class="details-button" (click)="goToProductDetail(product.id)">View Details</button>
+        </div>
+      </div>
+    </div>
+    <ng-template #noResults>
+      <p>No products found.</p>
+    </ng-template>
+  </div>
+  

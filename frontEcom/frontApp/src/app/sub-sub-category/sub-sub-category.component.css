@@ -1,0 +1,187 @@
+.subcategory-container {
+    width: 100%;
+  }
+  
+  .subcategory-header {
+    width: 100%;
+    height: 70vh;
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    padding: 20px;
+    box-sizing: border-box;
+    display: flex;
+    align-items: center; /* Center vertically */
+  }
+  
+  .subcategory-content {
+    max-width: 30%; /* Adjust the width as necessary */
+    color: gray;
+    size: 30px;
+  }
+  
+  .subcategory-header h2,
+  .subcategory-header p {
+    margin: 0;
+    padding: 0;
+  }
+  
+  .subcategory-header h2 {
+    font-size: 2em;
+  }
+  
+  .subcategory-header p {
+    font-size: 1.2em;
+  }
+  
+  .product-cards {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+  
+  .product-card {
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    width: calc(33.333% - 20px);
+    box-sizing: border-box;
+    transition: box-shadow 0.3s ease;
+  }
+  
+  .product-card:hover {
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  }
+  
+  .product-image-container {
+    width: 100%;
+    height: 200px;
+    overflow: hidden;
+  }
+  
+  .product-image {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+  
+  .product-details {
+    padding: 15px;
+  }
+  
+  .product-details h4 {
+    margin: 0 0 10px;
+    font-size: 18px;
+  }
+  
+  .product-details p {
+    margin: 0 0 10px;
+    color: #555;
+  }
+  
+  .product-colors {
+    display: flex;
+    gap: 5px;
+    margin-bottom: 15px;
+  }
+  
+  .color-ball {
+    width: 20px;
+    height: 20px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+    cursor: pointer;
+    transition: transform 0.3s ease;
+  }
+  
+  .color-ball:hover {
+    transform: scale(1.1);
+  }
+  
+  .details-button {
+    background-color: black;
+    color: white;
+    border: none;
+    font-size: 1em;
+    border-radius: 15px;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.3s ease;
+  }
+  
+  .details-button:hover {
+    background-color: darkgray;
+    transform: scale(1.05);
+  }
+  
+  @media (max-width: 768px) {
+    .product-cards {
+      flex-direction: column;
+    }
+  
+    .product-card {
+      width: 100%;
+    }
+  }
+  
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+button {
+    background: none;
+    border: none;
+    font-size: 2em;
+    cursor: pointer;
+}
+
+.center-title {
+    display: flex;
+    justify-content: center;
+}
+
+.filters {
+  display: flex;
+  justify-content: center; /* Centrer les filtres horizontalement */
+  align-items: center; /* Centrer les filtres verticalement */
+  margin-bottom: 3%;
+ 
+  background-color: gray;
+  padding: 1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+}
+
+.filter-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center; /* Centrer les éléments à l'intérieur de filter-item */
+}
+
+.filter-item label {
+  margin-bottom: 0.5rem;
+  font-weight: bold;
+}
+
+.filter-item input,
+.filter-item select {
+  padding: 0.5rem;
+  font-size: 1rem;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  width: 200px;
+}
+
+.filter-item input[type="range"] {
+  width: 100%;
+}

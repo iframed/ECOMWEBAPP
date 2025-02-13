@@ -1,0 +1,46 @@
+<div *ngIf="product" class="container">
+  <div class="row">
+    <!-- Left Column: Image and Selectors -->
+    <div class="col-md-6">
+      <div class="product-header" [ngStyle]="{'background-image': 'url(' + 'http://localhost:85/' + (selectedColorImages[currentImageIndex] || '') + ')'}">
+        <div class="image-selector">
+          <button class="prev-button" (click)="prevImage()">&#10094;</button>
+          <button class="next-button" (click)="nextImage()">&#10095;</button>
+        </div>
+      </div>
+
+      <div class="product-colors">
+        <div *ngFor="let color of product.colors">
+          <button class="color-ball" (click)="selectColor(color)" [ngStyle]="{'background-color': color}"></button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Right Column: Details and Form -->
+    <div class="col-md-6">
+      <div class="product-details">
+        <h2>{{ product.name }}</h2>
+        <p>{{ product.description }}</p>
+        <p>Original Price: {{ product.price | currency }}</p>
+        <p *ngIf="product.discount > 0">Discounted Price: {{ getDiscountedPrice(product) | currency }}</p>
+
+        <form (ngSubmit)="addToCart()">
+          <div class="form-group">
+            <label for="size">Size</label>
+            <select id="size" class="form-control" [(ngModel)]="selectedSize" name="size" required>
+              <option *ngFor="let size of product.sizes" [value]="size">{{ size }}</option>
+            </select>
+          </div>
+
+          <div class="form-group">
+            <label for="quantity">Quantity</label>
+            <input id="quantity" type="number" class="form-control" min="1" max="10" [(ngModel)]="quantity" name="quantity">
+          </div>
+
+          <button type="submit" class="btn btn-primary">Add to Cart</button>
+          <button type="button" class="btn btn-danger" (click)="deleteProduct()">Delete Product</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,67 @@
+<div *ngIf="category" class="category-container">
+    <div class="category-header" [ngStyle]="{'background-image': 'url(' + 'http://localhost:85/' + category.picturePath + ')'}">
+      <div class="centered-container">
+        <h2 class="centered-text"><strong>Decouvrez les meilleure </strong>{{ category.description }} <strong>Chez nous</strong></h2>
+        <button class="explore-button">Explorez Maintenant</button>
+      </div>
+    </div>
+  
+    <div *ngIf="category.subCategories && category.subCategories.length > 0">
+      <div class="center-title"><h3>Nouveaute Homme</h3></div>
+      <div class="carousel">
+       
+        <div class="carousel-page">
+          <div *ngFor="let subCategory of category.subCategories" class="carousel-item">
+            <div *ngIf="subCategory.picturePath" class="sub-category-item">
+              <img [src]="'http://localhost:85/' + subCategory.picturePath" alt="{{ subCategory.name }}" class="carousel-image">
+              <h4>{{ subCategory.name }}</h4>
+              <p>{{ subCategory.description }}</p>
+            </div>
+          </div>
+        </div>
+        
+      </div>
+    </div>
+  
+    <div *ngIf="category.subCategories && category.subCategories.length > 0">
+      
+      <div *ngFor="let subCategory of category.subCategories" class="sub-category-container">
+        <div *ngIf="subCategory.subCategories && subCategory.subCategories.length > 0">
+          <div *ngFor="let subSubCategory of subCategory.subCategories" class="sub-sub-category-container">
+            <div style="margin-top: 50px; margin-bottom: 30px; display: flex; justify-content: center; font-size: larger ; font-family: 'Gill Sans', 'Gill Sans MT', Calibri, 'Trebuchet MS', sans-serif;">
+              <h5>{{ subSubCategory.description }}   Disponible  </h5>
+            </div>
+  
+            <div *ngIf="subSubCategory.products && subSubCategory.products.length > 0">
+              <div class="carousel">
+                <button (click)="prevProductImage(subSubCategory.id)">&#10094;</button>
+                <div class="carousel-page">
+                  <div *ngFor="let product of getCurrentProducts(subSubCategory.id)" class="carousel-image-container">
+                    <div class="product-card">
+                      <img [src]="'http://localhost:85/' + selectedImages[product.id]" alt="{{ product.name }}" class="product-image">
+                      <div class="product-details">
+                        <h4>{{ product.name }}</h4>
+                        <p>Price: {{ product.price | currency }}</p>
+                        <div class="product-colors">
+                          <div *ngFor="let color of product.colors" class="color-ball" [ngStyle]="{'background-color': color}" (click)="selectColor(product, color)"></div>
+                        </div>
+                        <button class="details-button" (click)="goToProductDetail(product.id)">View Details</button>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <button (click)="nextProductImage(subSubCategory.id)">&#10095;</button>
+              </div>
+            </div>
+            <div *ngIf="subSubCategory.products && subSubCategory.products.length === 0">
+              <p>No products available for this sub-sub-category.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div *ngIf="category.subCategories && category.subCategories.length === 0">
+      <p>No sub-categories available for this category.</p>
+    </div>
+  </div>
+  

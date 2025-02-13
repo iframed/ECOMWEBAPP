@@ -1,0 +1,66 @@
+
+
+<div class="promo-bar">
+  <div class="promo-texts">
+    <div class="promo-text">Big Sale: Up to 50% off on selected items!</div>
+    <div class="promo-text">Free shipping on orders over $50!</div>
+  </div>
+</div>
+
+<nav class="navbar">
+  <ul class="main-categories">
+    <li *ngFor="let category of parentCategories" class="category-item"
+        (mouseenter)="onCategoryMouseEnter(category)" 
+        (mouseleave)="onCategoryMouseLeave()">
+      <a [routerLink]="['/category', category.id]" routerLinkActive="router-link-active">{{ category.name }}</a>
+      
+      <div class="dropdown" *ngIf="selectedCategory === category">
+        <div class="dropdown-column" *ngFor="let subCategory of getSubCategories(category)">
+          <a [routerLink]="['/subcategory', subCategory.id]" class="subcategory-link" style="color: black; font-size: larger;">{{ subCategory.name }}</a>
+          <ul class="sub-categories">
+            <li *ngFor="let subSubCategory of getSubCategories(subCategory)" class="subcategory-item">
+              <a [routerLink]="['/subsubcategory', subSubCategory.id]" routerLinkActive="router-link-active">{{ subSubCategory.name }}</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </li>
+    <li class="category-item search-item" (mouseenter)="showSearch()" (mouseleave)="hideSearch()" (click)="executeSearch()">
+      <i class="fas fa-search"></i>
+      <div class="search-container" *ngIf="searchVisible">
+        <input type="text" placeholder="Search..." class="search-input" [(ngModel)]="searchQuery">
+        
+      </div>
+    </li>
+  </ul>
+  
+  <a routerLink="/contact" class="contact-icon">
+    <i class="fas fa-envelope"></i>
+  </a>
+  <div class="navbar-icons">
+    <div class="icon-item">
+      <a [routerLink]="['/cart']" routerLinkActive="router-link-active"  (mouseenter)="showIconText($event, 'Panier')" (mouseleave)="hideIconText()">
+        <i class="fas fa-shopping-cart"></i>
+        <span class="icon-text">Panier</span>
+      </a>
+    </div>
+    <div class="icon-item" *ngIf="!authService.isAuthenticated" (mouseenter)="showIconText($event, 'Login')" (mouseleave)="hideIconText()">
+      <a [routerLink]="['/login']" routerLinkActive="router-link-active">
+        <i class="fas fa-sign-in-alt"></i>
+        <span class="icon-text">Login</span>
+      </a>
+    </div>
+    <div class="icon-item" *ngIf="authService.isAuthenticated" (mouseenter)="showIconText($event, 'Logout')" (mouseleave)="hideIconText()">
+      <i class="fas fa-sign-out-alt" (click)="logout()"></i>
+      <span class="icon-text">Logout</span>
+    </div>
+  </div>
+</nav>
+
+
+<nav class="admin-nav"  *ngIf="authService.isAdmin()">
+  <a [routerLink]="['/admin']" routerLinkActive="router-link-active">Admin</a>
+</nav>
+
+
+

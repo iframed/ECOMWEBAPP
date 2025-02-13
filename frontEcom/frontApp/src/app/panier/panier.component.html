@@ -1,0 +1,53 @@
+<div class="container">
+  <div class="cart-and-orders">
+    <!-- Panier -->
+    <div class="cart">
+      <h2>Shopping Cart</h2>
+      <ul class="cart-items">
+        <li *ngFor="let item of cartItems" class="cart-item">
+          <div class="item-details">
+            <span class="item-name">{{ item.product.name }}</span>
+            <span class="item-quantity">{{ item.quantity }} x</span>
+            <span class="item-price">{{ item.product.price }}$</span>
+          </div>
+          <button (click)="removeItem(item.product.id)" class="remove-button">Remove</button>
+        </li>
+      </ul>
+      <div class="total">
+        <span>Total: {{ totalAmount }}$</span>
+      </div>
+      <button (click)="placeOrder()" class="place-order-button" [disabled]="cartItems.length === 0">Place Order</button>
+    </div>
+
+    <!-- Commandes de l'utilisateur -->
+    <div class="orders" *ngIf="userOrders.length">
+      <h2>Your Orders</h2>
+      <table class="orders-table">
+        <thead>
+          <tr>
+            <th>Order ID</th>
+            <th>Order Date</th>
+            <th>Status</th>
+            <th>Total Amount</th>
+            <th>Items</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let order of userOrders">
+            <td>{{ order.id }}</td>
+            <td>{{ order.orderDate }}</td>
+            <td>{{ order.status }}</td>
+            <td>{{ order.totalAmount }}</td>
+            <td>
+              <ul class="order-items">
+                <li *ngFor="let item of order.orderItems">
+                  {{ item.productName }} - {{ item.quantity }} x {{ item.price }} (Discount: {{ item.discount }})
+                </li>
+              </ul>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>

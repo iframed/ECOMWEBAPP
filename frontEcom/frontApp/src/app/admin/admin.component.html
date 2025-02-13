@@ -1,0 +1,162 @@
+
+<!-- Formulaire pour créer une catégorie -->
+<form *ngIf="!showUpdateForm" [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="category-form">
+  <div class="form-group mb-3">
+    <label for="name" class="form-label">Name:</label>
+    <input id="name" formControlName="name" type="text" class="form-control" />
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="description" class="form-label">Description:</label>
+    <input id="description" formControlName="description" type="text" class="form-control" />
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="parentCategoryId" class="form-label">Parent Category:</label>
+    <select id="parentCategoryId" formControlName="parentCategoryId" (change)="onParentCategoryChange()" class="form-select">
+      <option value="">None</option>
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    </select>
+  </div>
+
+  <div class="form-group mb-3" *ngIf="categoryForm.get('parentCategoryId')!.value">
+    <label for="parentSubCategoryId" class="form-label">Parent Subcategory:</label>
+    <select id="parentSubCategoryId" formControlName="parentSubCategoryId" class="form-select">
+      <option value="">None</option>
+      <option *ngFor="let subCategory of subCategories" [value]="subCategory.id">{{ subCategory.name }}</option>
+    </select>
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="image" class="form-label">Image:</label>
+    <input id="image" type="file" (change)="onFileSelected($event)" class="form-control" />
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Submit</button>
+</form>
+
+<!-- Formulaire pour mettre à jour une catégorie -->
+<form *ngIf="showUpdateForm" [formGroup]="categoryForm" (ngSubmit)="onSubmit()" class="category-form">
+  <div class="form-group mb-3">
+    <label for="name" class="form-label">Name:</label>
+    <input id="name" formControlName="name" type="text" class="form-control" />
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="description" class="form-label">Description:</label>
+    <input id="description" formControlName="description" type="text" class="form-control" />
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="parentCategoryId" class="form-label">Parent Category:</label>
+    <select id="parentCategoryId" formControlName="parentCategoryId" (change)="onParentCategoryChange()" class="form-select">
+      <option value="">None</option>
+      <option *ngFor="let category of categories" [value]="category.id">{{ category.name }}</option>
+    </select>
+  </div>
+
+  <div class="form-group mb-3" *ngIf="categoryForm.get('parentCategoryId')!.value">
+    <label for="parentSubCategoryId" class="form-label">Parent Subcategory:</label>
+    <select id="parentSubCategoryId" formControlName="parentSubCategoryId" class="form-select">
+      <option value="">None</option>
+      <option *ngFor="let subCategory of subCategories" [value]="subCategory.id">{{ subCategory.name }}</option>
+    </select>
+  </div>
+
+  <div class="form-group mb-3">
+    <label for="image" class="form-label">Image:</label>
+    <input id="image" type="file" (change)="onFileSelected($event)" class="form-control" />
+  </div>
+
+  <button type="submit" class="btn btn-primary w-100">Update</button>
+</form>
+
+<div *ngIf="categories.length" class="admin-container">
+  <h2 class="mb-4">Categories and Subcategories</h2>
+  <ul class="list-group">
+    <li *ngFor="let category of categories" class="list-group-item">
+      {{ category.name }} (ID: {{ category.id }})
+      <button class="btn btn-sm btn-primary float-end" (click)="editCategory(category)">Edit</button>
+      <ul class="list-group mt-2" *ngIf="category.subCategories?.length">
+        <li *ngFor="let subCategory of category.subCategories" class="list-group-item">
+          {{ subCategory.name }} (ID: {{ subCategory.id }})
+          <button class="btn btn-sm btn-primary float-end" (click)="editCategory(subCategory)">Edit</button>
+          <ul class="list-group mt-2" *ngIf="subCategory.subCategories?.length">
+            <li *ngFor="let subSubCategory of subCategory.subCategories" class="list-group-item">
+              {{ subSubCategory.name }} (ID: {{ subSubCategory.id }})
+              <button class="btn btn-sm btn-primary float-end" (click)="editCategory(subSubCategory)">Edit</button>
+              <button class="btn btn-danger btn-sm float-end" (click)="deleteCategory(subSubCategory.id)">
+                <i class="fas fa-trash"></i>
+              </button>
+            </li>
+          </ul>
+          <button class="btn btn-danger btn-sm float-end" (click)="deleteCategory(subCategory.id)">
+            <i class="fas fa-trash"></i>
+          </button>
+        </li>
+      </ul>
+      <button class="btn btn-danger btn-sm float-end" (click)="deleteCategory(category.id)">
+        <i class="fas fa-trash"></i>
+      </button>
+    </li>
+  </ul>
+</div>
+
+<div *ngIf="orderHistory.length" class="admin-container mt-4">
+  <h2 class="mb-4">Order History</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Order ID</th>
+        <th>Customer Email</th>
+        <th>Order Date</th>
+        <th>Status</th>
+        <th>Total Amount</th>
+        <th>Items</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let order of orderHistory">
+        <td>{{ order.id }}</td>
+        <td>{{ order.customerEmail }}</td>
+        <td>{{ order.orderDate }}</td>
+        <td>{{ order.status }}</td>
+        <td>{{ order.totalAmount }}</td>
+        <td>
+          <ul>
+            <li *ngFor="let item of order.orderItems">
+              {{ item.productName }} - {{ item.quantity }} x {{ item.price }} (Discount: {{ item.discount }})
+            </li>
+          </ul>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+
+<div *ngIf="products.length" class="admin-container mt-4">
+  <h2 class="mb-4">Product List</h2>
+  <table class="table table-striped">
+    <thead>
+      <tr>
+        <th>Product ID</th>
+        <th>Name</th>
+        <th>Description</th>
+        <th>Price</th>
+        <th>Stock</th>
+        <th>Category</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let product of products">
+        <td>{{ product.id }}</td>
+        <td>{{ product.name }}</td>
+        <td>{{ product.description }}</td>
+        <td>{{ product.price }}</td>
+        <td>{{ product.stock }}</td>
+        <td>{{ product.categoryId }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+

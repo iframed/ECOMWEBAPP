@@ -1,0 +1,69 @@
+<div class="container">
+    <h2>Order Form</h2>
+    <form (ngSubmit)="placeOrder()">
+      <div class="form-group">
+        <label for="shippingStreet">Shipping Street</label>
+        <input id="shippingStreet" type="text" class="form-control" [(ngModel)]="order.shippingAddress.street" name="shippingStreet" required>
+      </div>
+      <div class="form-group">
+        <label for="shippingCity">Shipping City</label>
+        <input id="shippingCity" type="text" class="form-control" [(ngModel)]="order.shippingAddress.city" name="shippingCity" required>
+      </div>
+      <div class="form-group">
+        <label for="shippingState">Shipping State</label>
+        <input id="shippingState" type="text" class="form-control" [(ngModel)]="order.shippingAddress.state" name="shippingState" required>
+      </div>
+      <div class="form-group">
+        <label for="shippingPostalCode">Shipping Postal Code</label>
+        <input id="shippingPostalCode" type="text" class="form-control" [(ngModel)]="order.shippingAddress.postalCode" name="shippingPostalCode" required>
+      </div>
+      <div class="form-group">
+        <label for="shippingCountry">Shipping Country</label>
+        <input id="shippingCountry" type="text" class="form-control" [(ngModel)]="order.shippingAddress.country" name="shippingCountry" required>
+      </div>
+      
+      <div class="form-group">
+        <label for="billingStreet">Billing Street</label>
+        <input id="billingStreet" type="text" class="form-control" [(ngModel)]="order.billingAddress.street" name="billingStreet" required>
+      </div>
+      <div class="form-group">
+        <label for="billingCity">Billing City</label>
+        <input id="billingCity" type="text" class="form-control" [(ngModel)]="order.billingAddress.city" name="billingCity" required>
+      </div>
+      <div class="form-group">
+        <label for="billingState">Billing State</label>
+        <input id="billingState" type="text" class="form-control" [(ngModel)]="order.billingAddress.state" name="billingState" required>
+      </div>
+      <div class="form-group">
+        <label for="billingPostalCode">Billing Postal Code</label>
+        <input id="billingPostalCode" type="text" class="form-control" [(ngModel)]="order.billingAddress.postalCode" name="billingPostalCode" required>
+      </div>
+      <div class="form-group">
+        <label for="billingCountry">Billing Country</label>
+        <input id="billingCountry" type="text" class="form-control" [(ngModel)]="order.billingAddress.country" name="billingCountry" required>
+      </div>
+  
+      <h3>Order Summary</h3>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>Product</th>
+            <th>Price</th>
+            <th>Quantity</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of order.orderItems">
+            <td>{{ item.productId }}</td>
+            <td>{{ item.price | currency }}</td>
+            <td>{{ item.quantity }}</td>
+            <td>{{ item.price * item.quantity | currency }}</td>
+          </tr>
+        </tbody>
+      </table>
+      <h3>Total: {{ order.totalAmount | currency }}</h3>
+      <button type="submit" class="btn btn-success">Place Order</button>
+    </form>
+  </div>
+  
