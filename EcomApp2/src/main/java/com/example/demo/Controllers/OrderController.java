@@ -26,7 +26,7 @@ import org.slf4j.LoggerFactory;
 
 @RestController
 @CrossOrigin("http://localhost:4200")
-@RequestMapping("/orders")
+@RequestMapping("/api/orders")
 public class OrderController {
 
     private static final Logger logger = LoggerFactory.getLogger(OrderController.class);
@@ -48,13 +48,15 @@ public class OrderController {
         return orderService.getOrderById(id);
     }
     @GetMapping("/history/{email}")
-    public List<OrderDTO> getOrderHistory(@PathVariable String email) {
-        List<OrderDTO> orders = orderService.getOrdersByEmail(email);
-        for (OrderDTO order : orders) {
-            order.setCustomerEmail(email);
-        }
-        return orders;
+public List<OrderDTO> getOrderHistory(@PathVariable String email) {
+    logger.info("Fetching order history for: {}", email);  // Message pour vérifier
+    List<OrderDTO> orders = orderService.getOrdersByEmail(email);
+    for (OrderDTO order : orders) {
+        order.setCustomerEmail(email);
     }
+    return orders;
+}
+
 
     @PostMapping("/createorder")
     public OrderDTO createOrder(@RequestBody OrderDTO orderDTO) {

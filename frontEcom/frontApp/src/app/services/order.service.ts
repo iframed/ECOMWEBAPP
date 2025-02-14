@@ -9,7 +9,7 @@ import { AuthService } from './auth.service';
   providedIn: 'root'
 })
 export class OrderService {
-  private baseUrl = 'http://localhost:8080/api/orders';
+  private baseUrl = 'http://localhost:85/api/orders';
 
   constructor(private http: HttpClient, private authService: AuthService) {}
 

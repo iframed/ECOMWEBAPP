@@ -6,6 +6,7 @@ import { ProductService } from '../services/product.service';
 import { Product } from '../models/product';
 import { CartService } from '../services/cart.service';
 import { catchError, Observable, throwError } from 'rxjs';
+import { AuthService } from '../services/auth.service';
 
 
 
@@ -27,7 +28,8 @@ export class ProductDetailComponent implements OnInit {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
-    private cartService: CartService
+    private cartService: CartService,
+    private authService: AuthService
    
   ) { }
 
@@ -40,9 +42,29 @@ export class ProductDetailComponent implements OnInit {
       };
       this.selectColor(product.colors[0]);
     });
+
+
+    const userId = this.authService.getUserId();
+  console.log("ID utilisateur récupéré au démarrage:", userId);
   }
 
+  addToCart(): void {
+    if (this.product) {
+      const userId = this.authService.getUserId(); // Récupérer l'ID de l'utilisateur depuis AuthService
+      console.log("ID utilisateur récupéré:", userId);
+      if (userId && this.selectedSize) {
+        // Ajouter au panier en passant l'ID utilisateur, ID du produit et la quantité
+        this.cartService.addToCart(userId, this.product.id.toString(), this.quantity).subscribe(() => {
+          // Logique à effectuer après l'ajout au panier (ex : message de succès)
+        });
+      } else {
+        // Gérer le cas où l'utilisateur n'est pas authentifié ou où les informations sont manquantes
+        console.error('Utilisateur non authentifié ou données manquantes');
+      }
+    }
+  }
 
+  
 
 
   selectColor(color: string): void {

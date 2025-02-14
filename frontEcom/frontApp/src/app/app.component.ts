@@ -4,6 +4,8 @@ import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { CategoryComponent } from "./category/category.component";
 
+import { CommonModule } from '@angular/common';
+
 
 @Component({
   selector: 'app-root',
@@ -14,7 +16,9 @@ import { CategoryComponent } from "./category/category.component";
     RouterModule,
     NavbarComponent,
     FooterComponent,
-    CategoryComponent
+    CategoryComponent,
+    CommonModule
+   
 ]
 })
 export class AppComponent {

@@ -8,7 +8,7 @@ import { catchError } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class CartService {
-  private apiUrl = 'http://localhost:8080/api/cart';
+  private apiUrl = 'http://localhost:85/api/cart';
 
   constructor(private http: HttpClient) {}
 
@@ -22,14 +22,24 @@ export class CartService {
   }
 
 
-  addToCart(userId: string, productId: number, quantity: number): Observable<void> {
+ /* addToCart(userId: string, productId: string, quantity: number): Observable<void> {
     return this.http.post<void>(`${this.apiUrl}/add`, { userId, productId, quantity }).pipe(
       catchError(error => {
         console.error('Erreur lors de l’ajout au panier:', error);
         return throwError(error);
       })
     );
-  }
+  }*/
+    addToCart(userId: string, productId: string, quantity: number): Observable<void> {
+      const url = `${this.apiUrl}/add?userId=${userId}&productId=${productId}&quantity=${quantity}`;
+      return this.http.post<void>(url, {}).pipe(
+        catchError(error => {
+          console.error('Erreur lors de l’ajout au panier:', error);
+          return throwError(error);
+        })
+      );
+    }
+    
   
   removeFromCart(userId: string, productId: number): Observable<void> {
     return this.http.delete<void>(`${this.apiUrl}/remove`, {

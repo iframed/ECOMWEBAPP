@@ -90,12 +90,23 @@ export class AuthService {
 
 
 
- getUserId(): string {
+ /*getUserId(): string {
   if (this.email) {
     return this.email; // Retourne l'email comme identifiant unique
   }
   return localStorage.getItem('userId') || ''; // Sinon, cherche un userId dans localStorage
+}*/
+getUserId(): string {
+  console.log("getUserId appelé");
+
+  if (this.email) {
+    console.log("ID utilisateur depuis l'email:", this.email);  // Log de l'email
+    return this.email; // Retourne l'email comme identifiant unique
+  }
+  console.log("ID utilisateur depuis le localStorage:", localStorage.getItem('userId'));  // Log du localStorage
+  return localStorage.getItem('userId') || ''; // Sinon, cherche un userId dans localStorage
 }
+
 
  
 }
